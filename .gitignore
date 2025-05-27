@@ -1,0 +1,23 @@
+# Ignore le dossier de compilation
+/bin/
+
+# Ignorer les fichiers compilés Java
+*.class
+
+# Ignorer les fichiers générés par VS Code
+.vscode/
+
+# Ignorer les fichiers système
+.DS_Store
+Thumbs.db
+
+# Ignorer les fichiers de log
+*.log
+
+# Ignorer les fichiers temporaires
+*.tmp
+*.swp
+*.bak
+
+# Ignorer les dépendances locales (si non versionnées)
+lib/
