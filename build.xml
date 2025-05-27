@@ -1,0 +1,84 @@
+<project name="DessinPartageTP7" default="dist" basedir=".">
+
+  <description>
+    Fichier de compilation du projet RMI
+  </description>
+
+  <!-- Propriétés globales pour ce fichier -->
+  <property name="source.dir" location="src"/>
+  <property name="build.dir"  location="bin"/>
+  <property name="dist.dir"   location="dist"/>
+
+  <!-- Informations sur le service -->
+  <property name="service.classmain" value="Serveur"/>
+  <property name="service.source.dir" location="${source.dir}/service:${source.dir}/shared"/>
+  <property name="service.build.dir" value="${build.dir}/service"/>
+  <property name="service.jarname" value="${dist.dir}/service.jar"/>
+  
+  <!-- Informations sur le client -->
+  <property name="client.classmain" value="Client"/>
+  <property name="client.source.dir" location="${source.dir}/client:${source.dir}/shared"/>
+  <property name="client.build.dir" value="${build.dir}/client"/>
+  <property name="client.jarname" value="${dist.dir}/client.jar"/>
+
+  <!-- Création des répertoires de compilation -->
+  <target name="init" description="Création des répertoires du projet">
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${service.build.dir}"/>
+    <mkdir dir="${client.build.dir}"/>
+    <mkdir dir="${dist.dir}"/>
+  </target>
+
+  <!-- Nettoyage -->
+  <target name="clean" description="Nettoyage">
+    <delete dir="${build.dir}"/>
+    <delete dir="${dist.dir}"/>
+    <delete>
+      <fileset defaultexcludes="no" dir="${source.dir}"
+         includes="**/*~, **/*.class"/>
+    </delete>
+  </target>
+
+  <!-- Compilation du service -->
+  <target name="compile_service" depends="init" description="Compilation du service">
+    <javac srcdir="${service.source.dir}"
+       destdir="${service.build.dir}"
+       includeantruntime="false" />
+  </target>
+
+  <!-- Compilation client -->
+  <target name="compile_client" depends="init" description="Compilation du client">
+    <javac srcdir="${client.source.dir}"
+       destdir="${client.build.dir}"
+       includeantruntime="false" />
+  </target>
+  
+  <!-- Compilation de tout -->
+  <target name="build"
+      depends="compile_service, compile_client"
+      description="Compilation du projet" /> 
+
+  <!-- Jar du service -->
+  <target name="jar_service" depends="compile_service" description="Fabrication du jar service">
+    <jar destfile="${service.jarname}" basedir="${service.build.dir}">
+      <manifest>
+        <attribute name="Main-Class" value="${service.classmain}"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <!-- Jar du client -->
+  <target name="jar_client" depends="compile_client" description="Fabrication du jar client">
+    <jar destfile="${client.jarname}" basedir="${client.build.dir}">
+      <manifest>
+        <attribute name="Main-Class" value="${client.classmain}"/>
+      </manifest>
+    </jar>
+  </target>
+  
+  <!-- Jar de tous -->
+  <target name="dist"
+      depends="jar_service, jar_client"
+      description="Fabrication des jar" />
+
+</project>
