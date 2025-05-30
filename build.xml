@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Raytracing" default="build-all" basedir=".">
+    
+    <!-- Propriétés du projet -->
+    <property name="src.raytracer" location="tracé_de_rayon/src"/>
+    <property name="src.noeud" location="noeud/src"/>
+    <property name="src.server" location="server/src"/>
+    <property name="src.client" location="client/src"/>
+    
+    <property name="build.dir" location="bin"/>
+    <property name="build.noeud" location="${build.dir}/noeud"/>
+    <property name="build.server" location="${build.dir}/server"/>
+    <property name="build.client" location="${build.dir}/client"/>
+    
+    <!-- Initialisation - création des répertoires -->
+    <target name="init">
+        <mkdir dir="${build.noeud}"/>
+        <mkdir dir="${build.server}"/>
+        <mkdir dir="${build.client}"/>
+    </target>
+    
+    <!-- Nettoyage -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+    
+    <!-- Compilation du module noeud -->
+    <!-- javac -d bin/noeud tracé_de_rayon/src/raytracer/*.java server/src/ServiceDistributeur.java client/src/ServiceClient.java noeud/src/*.java -->
+    <target name="build-noeud" depends="init">
+        <javac destdir="${build.noeud}" 
+               srcdir="."
+               includeantruntime="false"
+               encoding="UTF-8">
+            <include name="tracé_de_rayon/src/raytracer/*.java"/>
+            <include name="server/src/ServiceDistributeur.java"/>
+            <include name="client/src/ServiceClient.java"/>
+            <include name="noeud/src/*.java"/>
+        </javac>
+        <echo message="Module noeud compilé avec succès"/>
+    </target>
+    
+    <!-- Compilation du module server -->
+    <!-- javac -d bin/server tracé_de_rayon/src/raytracer/*.java noeud/src/ServiceNoeud.java client/src/ServiceClient.java server/src/*.java -->
+    <target name="build-server" depends="init">
+        <javac destdir="${build.server}" 
+               srcdir="."
+               includeantruntime="false"
+               encoding="UTF-8">
+            <include name="tracé_de_rayon/src/raytracer/*.java"/>
+            <include name="noeud/src/ServiceNoeud.java"/>
+            <include name="client/src/ServiceClient.java"/>
+            <include name="server/src/*.java"/>
+        </javac>
+        <echo message="Module server compilé avec succès"/>
+    </target>
+    
+    <!-- Compilation du module client -->
+    <!-- javac -d bin/client tracé_de_rayon/src/raytracer/*.java noeud/src/ServiceNoeud.java server/src/ServiceDistributeur.java client/src/*.java -->
+    <target name="build-client" depends="init">
+        <javac destdir="${build.client}" 
+               srcdir="."
+               includeantruntime="false"
+               encoding="UTF-8">
+            <include name="tracé_de_rayon/src/raytracer/*.java"/>
+            <include name="noeud/src/ServiceNoeud.java"/>
+            <include name="server/src/ServiceDistributeur.java"/>
+            <include name="client/src/*.java"/>
+        </javac>
+        <echo message="Module client compilé avec succès"/>
+    </target>
+    
+    <!-- Compilation de tous les modules -->
+    <target name="build-all" depends="build-noeud, build-server, build-client">
+        <echo message="Tous les modules ont été compilés avec succès"/>
+    </target>
+    
+    <!-- Rebuild complet (clean + build) -->
+    <target name="rebuild" depends="clean, build-all">
+        <echo message="Rebuild complet terminé"/>
+    </target>
+    
+    <!-- Aide -->
+    <target name="help">
+        <echo message="Targets disponibles:"/>
+        <echo message="  build-all    : Compile tous les modules (défaut)"/>
+        <echo message="  build-noeud  : Compile uniquement le module noeud"/>
+        <echo message="  build-server : Compile uniquement le module server"/>
+        <echo message="  build-client : Compile uniquement le module client"/>
+        <echo message="  clean        : Supprime les fichiers compilés"/>
+        <echo message="  rebuild      : Clean + build-all"/>
+        <echo message="  help         : Affiche cette aide"/>
+    </target>
+    
+</project>
