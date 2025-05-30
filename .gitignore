@@ -4,8 +4,9 @@
 # Ignorer les fichiers compilés Java
 *.class
 
-# Ignorer les fichiers générés par VS Code
+# Ignorer les fichiers générés par VS Code,IntelIj
 .vscode/
+.iml
 
 # Ignorer les fichiers système
 .DS_Store
@@ -21,3 +22,4 @@ Thumbs.db
 
 # Ignorer les dépendances locales (si non versionnées)
 lib/
+
