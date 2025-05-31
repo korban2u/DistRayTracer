@@ -66,6 +66,10 @@
             <include name="server/src/ServiceDistributeur.java"/>
             <include name="client/src/*.java"/>
         </javac>
+        <!-- Copie de tous les fichiers .txt -->
+        <copy todir="${build.client}">
+            <fileset dir="client/src" includes="**/*.txt"/>
+        </copy>
         <echo message="Module client compilé avec succès"/>
     </target>
     
