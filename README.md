@@ -4,7 +4,7 @@ Un système de calcul distribué pour la génération d'images par lancer de ray
 
 ## Description
 
-Ce projet implémente un système de raytracing distribué qui permet de répartir le calcul d'une image sur plusieurs machines connectées en réseau. L'image est découpée en blocs de 128x128 pixels qui sont distribués équitablement entre les nœuds de calcul disponibles.
+Ce projet implémente un système de raytracing distribué qui permet de répartir le calcul d'une image sur plusieurs machines connectées en réseau. L'image est découpée en blocs de 128x128 pixels qui sont distribués équitablement entre les noeuds de calcul disponibles.
 
 
 ## Prérequis
@@ -30,7 +30,7 @@ ant build-all
 
 # Ou compiler individuellement
 ant build-server   # Serveur
-ant build-noeud     # Nœud
+ant build-noeud     # Noeud
 ant build-client    # Client
 
 # Nettoyer les fichiers compilés
@@ -45,8 +45,8 @@ mkdir -p bin/server bin/noeud bin/client
 # Compiler le serveur
 javac -d bin/server tracé_de_rayon/src/raytracer/*.java noeud/src/ServiceNoeud.java client/src/ServiceClient.java server/src/*.java
 
-# Compiler les nœuds
-avac -d bin/noeud tracé_de_rayon/src/raytracer/*.java server/src/ServiceDistributeur.java client/src/ServiceClient.java noeud/src/*.java
+# Compiler les noeuds
+javac -d bin/noeud tracé_de_rayon/src/raytracer/*.java server/src/ServiceDistributeur.java client/src/ServiceClient.java noeud/src/*.java
 
 # Compiler le client
 javac -d bin/client tracé_de_rayon/src/raytracer/*.java noeud/src/ServiceNoeud.java server/src/ServiceDistributeur.java client/src/*.java
@@ -180,19 +180,19 @@ java LancerClient 192.168.1.100 1099 1024 1024
 
 Le système est composé de trois modules principaux :
 
-### 🖥️ **Serveur (Distributeur)**
+### **Serveur (Distributeur)**
 - Gère l'enregistrement des nœuds de calcul
 - Maintient la liste des nœuds disponibles
 - Détecte et supprime les nœuds déconnectés
 - Utilise le registre RMI pour la communication
 
-### ⚙️ **Nœud (Machine de calcul)**
+### **Nœud (Machine de calcul)**
 - Effectue les calculs de raytracing pour des blocs d'image
 - S'enregistre automatiquement auprès du distributeur
 - Reçoit la scène à calculer du client
 - Peut être lancé sur plusieurs machines
 
-### 💻 **Client**
+### **Client**
 - Interface utilisateur pour lancer le calcul
 - Découpe l'image en blocs et les distribue
 - Reçoit et affiche les résultats en temps réel
